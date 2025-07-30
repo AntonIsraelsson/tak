@@ -1,29 +1,33 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.14.2/.schema/devbox.schema.json",
   "packages": [
-    "rustup@latest",
     "bun@latest",
+    "rustup@latest",
     "wasm-pack@latest",
-    "libiconv@latest"
+    "nodejs_18@latest"
   ],
   "shell": {
     "init_hook": [
-      "echo 'Setting up development environment...'",
+      "# Configure Rust toolchain",
       "rustup default stable",
-      "echo 'Rust toolchain:'",
-      "cargo --version",
-      "wasm-pack --version",
-      "echo 'Node.js toolchain:'",
-      "bun --version",
-      "echo 'Environment ready!'"
+      "rustup target add wasm32-unknown-unknown",
+      "rustup component add rust-src",
+      "",
+      "# Verify installations",
+      "echo 'Devbox environment ready!'",
+      "echo 'Bun version:' $(bun --version)",
+      "echo 'Cargo version:' $(cargo --version)",
+      "echo 'wasm-pack version:' $(wasm-pack --version)"
     ],
     "scripts": {
-      "dev": [
-        "echo 'Starting development server...'",
-        "cd tak-game && wasm-pack build --target web --out-dir ../tak-app/public",
-        "echo 'Starting development server...'",
-        "cd tak-app && bun run dev"
-      ]
+      "setup-frontend": "cd frontend && bun install",
+      "dev-frontend": "cd frontend && bun run dev",
+      "build-wasm": "cd wasm-stuff && wasm-pack build --target web",
+      "dev-full": "bun run build-wasm && bun run dev-frontend"
     }
+  },
+  "env": {
+    "CARGO_TARGET_DIR": "./target",
+    "RUST_LOG": "info"
   }
 }
