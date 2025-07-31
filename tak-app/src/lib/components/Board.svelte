@@ -5,7 +5,6 @@
 	import Cell from './Cell.svelte';
 
 	export let board: Board;
-	export let cellSize = 80;
 	export let themeName = 'default';
 	export let lastMoveRow = -1;
 	export let lastMoveCol = -1;
@@ -14,15 +13,12 @@
 
 	$: theme = getTheme(themeName);
 	$: boardSize = board.length;
-	$: totalSize = boardSize * cellSize + (boardSize - 1) * theme.board.gridGap;
 </script>
 
 <div class="board-container">
 	<div 
 		class="board" 
 		style="
-			width: {totalSize}px; 
-			height: {totalSize}px;
 			grid-template-columns: repeat({boardSize}, 1fr);
 			grid-template-rows: repeat({boardSize}, 1fr);
 			gap: {theme.board.gridGap}px;
@@ -43,7 +39,6 @@
 						{stack}
 						row={rowIndex}
 						col={colIndex}
-						size={cellSize}
 						{themeName}
 						maxStackVisible={maxStackVisible}
 						isHighlighted={rowIndex === lastMoveRow && colIndex === lastMoveCol}
@@ -60,7 +55,6 @@
 			<div 
 				class="label" 
 				style="
-					height: {cellSize}px;
 					color: {theme.labels.color};
 					font-size: {theme.labels.fontSize}px;
 				"
@@ -71,12 +65,11 @@
 	</div>
 
 	<!-- Column labels -->
-	<div class="col-labels" style="width: {totalSize}px;">
+	<div class="col-labels">
 		{#each Array(boardSize) as _, i}
 			<div 
 				class="label" 
 				style="
-					width: {cellSize}px;
 					color: {theme.labels.color};
 					font-size: {theme.labels.fontSize}px;
 				"
@@ -92,28 +85,36 @@
 		position: relative;
 		display: inline-block;
 		padding: 30px;
+		width: 100%;
+		height: 100%;
+		box-sizing: border-box;
 	}
 
 	.board {
 		display: grid;
 		padding: 8px;
+		width: 100%;
+		height: 100%;
+		box-sizing: border-box;
 	}
 
 	.row-labels {
 		position: absolute;
 		left: 8px;
-		top: 42px;
+		top: 38px;
+		bottom: 38px;
 		display: flex;
 		flex-direction: column-reverse;
-		gap: var(--grid-gap, 3px);
+		justify-content: space-around;
 	}
 
 	.col-labels {
 		position: absolute;
 		bottom: 8px;
-		left: 42px;
+		left: 38px;
+		right: 38px;
 		display: flex;
-		gap: var(--grid-gap, 3px);
+		justify-content: space-around;
 	}
 
 	.label {

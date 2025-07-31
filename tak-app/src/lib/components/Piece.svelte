@@ -5,9 +5,9 @@
 
 	export let piece: Piece;
 	export let stackIndex = 0;
-	export let size = 40;
+	export let size: number = 40; // Always in pixels
 	export let themeName = 'default';
-	export let pieceOffset = 5;
+	export let pieceOffset = 5; // Absolute pixels
 
 	$: theme = getTheme(themeName);
 	$: offsetY = stackIndex * pieceOffset * -1;

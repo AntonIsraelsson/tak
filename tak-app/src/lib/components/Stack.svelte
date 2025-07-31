@@ -4,15 +4,14 @@
 	import Piece from './Piece.svelte';
 
 	export let stack: Stack;
-	export let pieceSize = 40;
 	export let themeName = 'default';
-
-	$: pieceOffset = 5;
+	export let pieceOffset = 5; // Absolute pixels
+	export let pieceSize: number; // Size in pixels
 </script>
 
 <div class="stack">
 	{#each stack as piece, index}
-		<Piece {piece} {themeName} stackIndex={index} size={pieceSize} pieceOffset={pieceOffset}/>
+		<Piece {piece} {themeName} stackIndex={index} size={pieceSize} {pieceOffset} />
 	{/each}
 </div>
 
@@ -22,5 +21,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		width: 100%;
+		height: 100%;
 	}
 </style>
