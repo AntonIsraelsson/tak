@@ -5,18 +5,18 @@
 
 	export let stack: Stack;
 	export let pieceSize = 40;
-
-	$: stackHeight = pieceSize + stack.length * 3;
+	export let themeName = 'default';
 </script>
 
-<div class="stack" style="position: relative; height: {stackHeight}px; width: {pieceSize}px;">
+<div class="stack">
 	{#each stack as piece, index}
-		<Piece {piece} stackIndex={index} size={pieceSize} />
+		<Piece {piece} {themeName} stackIndex={index} size={pieceSize} />
 	{/each}
 </div>
 
 <style>
 	.stack {
+		position: relative;
 		display: flex;
 		align-items: center;
 		justify-content: center;
