@@ -9,6 +9,7 @@
 	export let themeName = 'default';
 	export let lastMoveRow = -1;
 	export let lastMoveCol = -1;
+	export let maxStackVisible = 5;
 	export let onCellClick: (row: number, col: number) => void = () => {};
 
 	$: theme = getTheme(themeName);
@@ -44,6 +45,7 @@
 						col={colIndex}
 						size={cellSize}
 						{themeName}
+						maxStackVisible={maxStackVisible}
 						isHighlighted={rowIndex === lastMoveRow && colIndex === lastMoveCol}
 						{onCellClick}
 					/>

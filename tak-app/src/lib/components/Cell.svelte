@@ -10,8 +10,8 @@
 	export let size = 80;
 	export let themeName = 'default';
 	export let onCellClick: (row: number, col: number) => void = () => {};
-
 	export let isHighlighted = false;
+	export let maxStackVisible = Infinity;
 
 	$: theme = getTheme(themeName);
 	$: isEmpty = stack.length === 0;
@@ -22,6 +22,13 @@
 		: isCheckered 
 			? theme.cell.backgroundAlt 
 			: theme.cell.background;
+	
+	// <!-- Main visible stack -->
+	$: visibleStack = maxStackVisible === Infinity ? stack : stack.slice(-maxStackVisible);
+	// <!-- Overflow stack for hidden pieces -->
+	$: overflowStack = maxStackVisible === Infinity ? [] : stack.slice(0, -maxStackVisible);
+	$: pieceSize = size * 0.5;
+	$: pieceOffset = 5;
 </script>
 
 <button
@@ -37,7 +44,26 @@
 	aria-label="Cell {coordinates}"
 >
 	{#if !isEmpty}
-		<StackComponent {stack} {themeName} pieceSize={size * 0.5} maxVisible={5} />
+		<StackComponent stack={visibleStack} {themeName} pieceSize={pieceSize} />
+		
+		{#if overflowStack.length > 0}
+			<div 
+				class="overflow-stack"
+				style="
+					position: absolute;
+					right: {pieceSize/2 - pieceOffset - 2}px;
+					top: {pieceSize+pieceOffset*3}px;
+					transform: translateY(-50%);
+					z-index: 1000;
+				"
+			>
+				<StackComponent 
+					stack={overflowStack} 
+					{themeName} 
+					pieceSize={pieceOffset * 2} 
+				/>
+			</div>
+		{/if}
 	{/if}
 </button>
 
@@ -54,5 +80,9 @@
 
 	.cell:hover {
 		filter: brightness(1.05);
+	}
+
+	.overflow-stack {
+		pointer-events: none;
 	}
 </style>

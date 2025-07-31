@@ -16,7 +16,6 @@
 				{ color: 'black', type: 'flat' },
 				{ color: 'white', type: 'flat' },
 				{ color: 'black', type: 'flat' },
-				{ color: 'black', type: 'flat' },
 				{ color: 'white', type: 'capstone' }
 			], 
 			[{ color: 'white', type: 'flat' }], 
@@ -36,7 +35,7 @@
 
 <div class="container">
 	<h1>Tak Board</h1>
-	<BoardComponent {board} {lastMoveRow} {lastMoveCol} onCellClick={handleCellClick} />
+	<BoardComponent {board} {lastMoveRow} {lastMoveCol} maxStackVisible={5} onCellClick={handleCellClick} />
 </div>
 
 <style>
