@@ -5,7 +5,7 @@ export const defaultTheme: Theme = {
   name: 'default',
   board: {
     background: '#607D8B',
-    gridGap: 1,
+    gridGap: 0,
     borderRadius: 0,
     shadow: 'none'
   },
