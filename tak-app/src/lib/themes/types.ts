@@ -9,9 +9,11 @@ export interface Theme {
   };
   cell: {
     background: string;
+    backgroundAlt: string;
     border: string;
     borderRadius: number;
     hoverBackground: string;
+    highlightBackground: string;
   };
   pieces: {
     white: {

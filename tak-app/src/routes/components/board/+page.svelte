@@ -1,26 +1,56 @@
 <script lang="ts">
-    import BoardComponent from '$lib/components/Board.svelte';
-    import type { Board, Stack, Piece, Color, PieceType } from '$lib/types';
+	import BoardComponent from '$lib/components/Board.svelte';
+	import type { Board, Stack, Piece, Color, PieceType } from '$lib/types';
 
-    // Initialize a 5x5 board with some random stacks
-    let board: Board = [];
-    let N = 5;
-    for (let i = 0; i < N; i++) {
-        let row = [];
-        for (let j = 0; j < N; j++) {
-            // choose a random color out of white and black, and a random type out of flat, standing, and capstone (50% chance that the stack is empty)
-            let color: Color = Math.random() < 0.5 ? 'white' : 'black';
-            let type: PieceType = Math.random() < 0.5 ? 'flat' : Math.random() < 0.5 ? 'standing' : 'capstone';
-            let stack: Stack = [];
-            if (Math.random() < 0.5) {
-                stack.push({ color, type });   
-            }
-            // Debug print i,j,color,type,stack_empty
-            console.log(i,j,color,type,stack.length === 0);
-            row.push(stack);
-        }
-        board.push(row);
-    }
+	// Create test board with large stack to test overflow
+	let board: Board = [
+		[[], [], [], [], []],
+		[[], [], [], [], []],
+		[[], [{ color: 'black', type: 'flat' }], [{ color: 'white', type: 'standing' }], [{ color: 'black', type: 'capstone' }], []],
+		[
+			[{ color: 'white', type: 'flat' }], 
+			[
+				{ color: 'white', type: 'flat' },
+				{ color: 'black', type: 'flat' },
+				{ color: 'white', type: 'flat' },
+				{ color: 'black', type: 'flat' },
+				{ color: 'white', type: 'flat' },
+				{ color: 'black', type: 'flat' },
+				{ color: 'black', type: 'flat' },
+				{ color: 'white', type: 'capstone' }
+			], 
+			[{ color: 'white', type: 'flat' }], 
+			[{ color: 'white', type: 'flat' }], 
+			[]
+		],
+		[[{ color: 'white', type: 'flat' }], [{ color: 'black', type: 'flat' }], [{ color: 'black', type: 'flat' }], [], []]
+	];
+
+	let lastMoveRow = 3;
+	let lastMoveCol = 1;
+
+	function handleCellClick(row: number, col: number) {
+		console.log(`Clicked cell at ${String.fromCharCode(97 + col)}${row + 1}`);
+	}
 </script>
 
-<BoardComponent {board} />
+<div class="container">
+	<h1>Tak Board</h1>
+	<BoardComponent {board} {lastMoveRow} {lastMoveCol} onCellClick={handleCellClick} />
+</div>
+
+<style>
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 2rem;
+		background-color: #f0f4f8;
+		min-height: 100vh;
+	}
+
+	h1 {
+		color: #2d3748;
+		margin-bottom: 2rem;
+	}
+</style>

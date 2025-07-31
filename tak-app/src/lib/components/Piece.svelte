@@ -9,19 +9,21 @@
 	export let themeName = 'default';
 
 	$: theme = getTheme(themeName);
-	$: offsetY = stackIndex * -4;
+	$: offsetY = stackIndex * -5;
 	$: isCapstone = piece.type === 'capstone';
 	$: isStanding = piece.type === 'standing';
 	$: pieceTheme = theme.pieces[piece.color];
 	$: borderRadius = isCapstone ? `${theme.pieces.borderRadius.capstone}%` : `${theme.pieces.borderRadius[piece.type]}px`;
+	$: pieceWidth = isStanding ? size * 0.33 : size;
+	$: pieceHeight = isStanding ? size : size;
 </script>
 
 <div
 	class="piece"
 	style="
-		width: {isStanding ? size * 0.3 : size}px;
-		height: {isStanding ? size : size}px;
-		transform: translate(0, {offsetY}px) {isStanding ? 'rotate(45deg)' : ''};
+		width: {pieceWidth}px;
+		height: {pieceHeight}px;
+		transform: translate(0, {offsetY}px);
 		z-index: {stackIndex + 1};
 		background-color: {pieceTheme.background};
 		border: {pieceTheme.border};

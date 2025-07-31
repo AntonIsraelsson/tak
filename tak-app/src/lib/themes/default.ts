@@ -4,35 +4,37 @@ import type { Theme } from './types';
 export const defaultTheme: Theme = {
   name: 'default',
   board: {
-    background: '#9fb3b3',
-    gridGap: 3,
-    borderRadius: 12,
-    shadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+    background: '#607D8B',
+    gridGap: 1,
+    borderRadius: 0,
+    shadow: 'none'
   },
   cell: {
-    background: '#b8c7c7',
+    background: '#90A4AE',
+    backgroundAlt: '#8A9FAA', // for checkered pattern
     border: 'none',
-    borderRadius: 8,
-    hoverBackground: '#c4d1d1'
+    borderRadius: 0,
+    hoverBackground: '#9EAFB3',
+    highlightBackground: '#8CBB63' // for last move
   },
   pieces: {
     white: {
-      background: '#f8f9fa',
-      border: '1px solid #dee2e6'
+      background: '#ECEFF1',
+      border: '1px solid #CFD8DC'
     },
     black: {
-      background: '#546e7a',
-      border: '1px solid #37474f'
+      background: '#546E7A',
+      border: '1px solid #37474F'
     },
     borderRadius: {
-      flat: 6,
-      standing: 6,
+      flat: 2,
+      standing: 2,
       capstone: 50
     },
-    shadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+    shadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
   },
   labels: {
-    color: '#4a5568',
+    color: '#37474F',
     fontSize: 14
   }
 };

@@ -11,9 +11,17 @@
 	export let themeName = 'default';
 	export let onCellClick: (row: number, col: number) => void = () => {};
 
+	export let isHighlighted = false;
+
 	$: theme = getTheme(themeName);
 	$: isEmpty = stack.length === 0;
 	$: coordinates = String.fromCharCode(97 + col) + (row + 1);
+	$: isCheckered = (row + col) % 2 === 1;
+	$: cellBackground = isHighlighted 
+		? theme.cell.highlightBackground 
+		: isCheckered 
+			? theme.cell.backgroundAlt 
+			: theme.cell.background;
 </script>
 
 <button
@@ -21,7 +29,7 @@
 	style="
 		width: {size}px; 
 		height: {size}px;
-		background-color: {theme.cell.background};
+		background-color: {cellBackground};
 		border: {theme.cell.border};
 		border-radius: {theme.cell.borderRadius}px;
 	"
@@ -29,7 +37,7 @@
 	aria-label="Cell {coordinates}"
 >
 	{#if !isEmpty}
-		<StackComponent {stack} {themeName} pieceSize={size * 0.6} />
+		<StackComponent {stack} {themeName} pieceSize={size * 0.5} maxVisible={5} />
 	{/if}
 </button>
 

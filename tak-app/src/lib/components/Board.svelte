@@ -7,6 +7,8 @@
 	export let board: Board;
 	export let cellSize = 80;
 	export let themeName = 'default';
+	export let lastMoveRow = -1;
+	export let lastMoveCol = -1;
 	export let onCellClick: (row: number, col: number) => void = () => {};
 
 	$: theme = getTheme(themeName);
@@ -42,6 +44,7 @@
 						col={colIndex}
 						size={cellSize}
 						{themeName}
+						isHighlighted={rowIndex === lastMoveRow && colIndex === lastMoveCol}
 						{onCellClick}
 					/>
 				</div>
@@ -91,7 +94,7 @@
 
 	.board {
 		display: grid;
-		padding: 12px;
+		padding: 8px;
 	}
 
 	.row-labels {
